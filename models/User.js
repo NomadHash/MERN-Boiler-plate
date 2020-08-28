@@ -61,12 +61,25 @@ userSchema.methods.comparePassword = function (plainPassword, callback) {
 
 userSchema.methods.generateToken = function (callback) {
   var user = this;
-  console.log(SECRET_TOKEN, DB_URL);
   var token = jwt.sign({ id: user._id }, SECRET_TOKEN);
   user.token = token;
   user.save(function (err, user) {
     if (err) return callback(err);
     callback(null, user);
+  });
+};
+
+// Schema-static-methods
+
+userSchema.statics.findByToken = function (token, callback) {
+  var user = this;
+  jwt.verify(token, SECRET_TOKEN, function (err, decoded) {
+    console.log(decoded);
+    user.findOne({ _id: decoded.id, token: token }, function (err, user) {
+      if (err) return callback(err);
+      callback(null, user);
+    });
+    // 유저 아이디를 이용하여 유저를 찾은뒤 클라이언트의 토큰과 db토큰과 비교
   });
 };
 

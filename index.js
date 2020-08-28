@@ -1,13 +1,13 @@
 import express from "express";
+const app = express();
+import cookieParser from "cookie-parser";
+import auth from "./middleware/auth";
 import mongoose from "mongoose";
 import morgan from "morgan";
-import cookieParser from "cookie-parser";
 
 // import .env(DB_URL, Server_Port)
 import config from "./config/index";
 const { DB_URL, SERVER_PORT } = config;
-
-const app = express();
 
 import User from "./models/User";
 
@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
   res.send("Root page");
 });
 
-app.post("/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   console.log(req.body);
   const user = new User(req.body);
 
@@ -46,7 +46,7 @@ app.post("/register", (req, res) => {
   });
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/users/login", (req, res) => {
   //Find Email at DB
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
@@ -69,13 +69,33 @@ app.post("/login", (req, res) => {
 
         //save Token at Cookie
         res
-          .cookie("X_auth", user.token)
+          .cookie("x_auth", user.token)
           .status(200)
           .json({ loginSuccess: true, userId: user._Id, token: user.token });
       });
     });
   });
 });
+
+app.get("/api/users/auth", auth, (req, res) => {
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+  });
+});
+
+app.get("/api/users/logout", auth, (req, res) => {
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true,
+    });
+  });
+});
+
 app.listen(SERVER_PORT, (req, res) => {
   console.log(`Server on port ${SERVER_PORT}`);
 });
