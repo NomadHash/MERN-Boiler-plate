@@ -10,10 +10,18 @@ function App() {
   return (
     <Router>
       <div>
+        <ul>
+          <li>
+            <Link to="/">home</Link>
+          </li>
+          <li>
+            <Link to="/login">login Page</Link>
+          </li>
+        </ul>
         <Switch>
-          <Route path="/" component={LandingPage} />
           <Route path="/register" component={RegisterPage} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/" component={LandingPage} />
         </Switch>
       </div>
     </Router>

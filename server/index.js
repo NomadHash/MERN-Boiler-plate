@@ -33,6 +33,10 @@ app.get("/", (req, res) => {
   res.send("Root page");
 });
 
+app.get("/api/hello", (req, res) => {
+  res.send("hello page");
+});
+
 app.post("/api/users/register", (req, res) => {
   console.log(req.body);
   const user = new User(req.body);
