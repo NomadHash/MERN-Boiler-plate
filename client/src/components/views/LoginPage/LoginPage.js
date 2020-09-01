@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../_actions/user_actions';
+import { withRouter } from 'react-router-dom';
 
-const LoginPage = ({ history }) => {
+const LoginPage = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,7 +27,7 @@ const LoginPage = ({ history }) => {
       response.payload.loginSuccess === true
         ? console.log('Login Success')
         : alert('Login fail');
-      history.push('/');
+      props.history.push('/');
     });
   };
 
@@ -47,6 +48,9 @@ const LoginPage = ({ history }) => {
         }}
         onSubmit={onSubmitHandler}
       >
+        <span>
+          <h1>Login</h1>
+        </span>
         <h2>Email</h2>
         <input type="email" value={email} onChange={onEmailHandler} />
         <h2>password</h2>
@@ -57,4 +61,4 @@ const LoginPage = ({ history }) => {
   );
 };
 
-export default LoginPage;
+export default withRouter(LoginPage);

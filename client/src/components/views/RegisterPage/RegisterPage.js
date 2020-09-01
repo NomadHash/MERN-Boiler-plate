@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../../_actions/user_actions';
+import { withRouter } from 'react-router-dom';
 
 const RegisterPage = (props) => {
   const [email, setEmail] = useState('');
@@ -39,7 +40,7 @@ const RegisterPage = (props) => {
         password,
       };
       console.log('regist');
-      dispatch(registerUser(requestBody));
+      dispatch(registerUser(requestBody)).then(props.history.push('/login'));
     }
   };
   return (
@@ -80,4 +81,4 @@ const RegisterPage = (props) => {
   );
 };
 
-export default RegisterPage;
+export default withRouter(RegisterPage);
