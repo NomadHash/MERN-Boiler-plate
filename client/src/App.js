@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Auth from './hoc/auth';
+
+// React-component
+import Header from './components/views/Header/Header';
 import LandingPage from './components/views/LandingPage/LandingPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
@@ -10,6 +13,7 @@ import './App.css';
 function App() {
   return (
     <Router>
+      <Header />
       <div>
         <ul>
           <li>
