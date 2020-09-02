@@ -1,23 +1,24 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { auth } from '../../_actions/user_actions';
 
-import { useDispatch } from 'react-redux';
-import { auth } from '../../../_actions/user_actions';
-
-import HeaderContainer from '../../../container/HeaderContainer';
+//import Container
+import HeaderContainer from '../../container/HeaderContainer';
 
 //LogoImg
-import contentImg from '../../../public/contentImg.png';
-import profileImg from '../../../public/profile.png';
+import contentImg from '../../public/contentImg.png';
+import profileImg from '../../public/profile.png';
 
 const LandingPage = (props) => {
   const dispatch = useDispatch();
   dispatch(auth()).then((response) => {
-    // console.log(response);
+    console.log(response);
   });
 
+  // Handler Function
   const onClickHandler = () => {
     axios.get('/api/users/logout').then((response) => {
       console.log(response.data);
@@ -29,19 +30,18 @@ const LandingPage = (props) => {
 
   return (
     <div>
-      <LandingTitle>
+      <LandingContent>
         <HeaderContainer />
-        <FirstTitle>Easy start with</FirstTitle>
-        <SecondTitle>MERN BOILER PLATE</SecondTitle>
-        <StartBtn>Start guide</StartBtn>
+        <FirstTitle>쉽고 빠르게 시작하는</FirstTitle>
+        <SecondTitle>MERN 보일러 플레이트</SecondTitle>
+        <StartBtn>빠른 시작</StartBtn>
         <img src={contentImg} alt="contentImg" />
         <CreateByArea>
           <ProfileImg src={profileImg} alt="profileImg" />
           <ProfileText>CreateBy Nomad_Hash</ProfileText>
           <ProfileText>github.com/NomadHash</ProfileText>
         </CreateByArea>
-      </LandingTitle>
-
+      </LandingContent>
       <button onClick={onClickHandler}>로그아웃</button>
     </div>
   );
@@ -68,18 +68,23 @@ const ProfileImg = styled.img`
   box-shadow: 1px 6px 6px rgba(0, 0, 0, 0.35);
 `;
 
-const LandingTitle = styled.div`
+const LandingContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  background: #141e30; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #243b55, #141e30);
+  background: linear-gradient(to right, #243b55, #141e30);
 `;
 
 const FirstTitle = styled.h2`
   margin: 0;
   font-weight: 200;
   font-size: 6vw;
-  margin-top: 2vw;
+  margin-top: 4vw;
+  color: white;
 `;
 
 const SecondTitle = styled.h1`
@@ -87,17 +92,24 @@ const SecondTitle = styled.h1`
   font-weight: 500;
   font-size: 6vw;
   margin-bottom: 40px;
+  color: white;
 `;
 
 const StartBtn = styled.button`
-  background: #dd4d2e;
-  color: white;
+  background: #61dafb;
   border: none;
   border-radius: 7px;
-  padding: 9px 7px;
+  padding: 9px 17px;
   font-size: 21px;
   font-weight: 600;
-  box-shadow: 0px 5px 0px rgb(74 51 0);
+  box-shadow: 0px 5px 0px rgba(0,0,0,0.7);
+  cursor: pointer;
+  &:hover {
+    outline: none;
+  }
+}
+
+
 `;
 
 export default withRouter(LandingPage);

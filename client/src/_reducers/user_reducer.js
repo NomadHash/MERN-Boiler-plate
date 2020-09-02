@@ -2,7 +2,7 @@ import { LOGIN_USER, REGISTER_USER, AUTH_USER } from '../_actions/types';
 
 const initState = {
   userData: {
-    isAuth: '안녕하세요',
+    isAuth: '',
   },
 };
 

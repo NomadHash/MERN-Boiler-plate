@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { registerUser } from '../../../_actions/user_actions';
+import { registerUser } from '../../_actions/user_actions';
 import { withRouter } from 'react-router-dom';
 
 const RegisterPage = (props) => {
@@ -12,25 +12,21 @@ const RegisterPage = (props) => {
   // Redux-Dispatch
   const dispatch = useDispatch();
 
+  // Handler function
   const onEmailHandler = (event) => {
     setEmail(event.target.value);
   };
-
   const onNameHandler = (event) => {
     setName(event.target.value);
   };
-
   const onPasswordHandler = (event) => {
     setPassword(event.target.value);
   };
-
   const onConfilmPasswordHandler = (event) => {
     setConfilmPassword(event.target.value);
   };
-
   const onSubmitHandler = (event) => {
     event.preventDefault(); // 새로고침 방지
-
     if (password !== confilmPassword) {
       alert('패스워드가 일치하지 않습니다.');
     } else {
@@ -43,23 +39,10 @@ const RegisterPage = (props) => {
       dispatch(registerUser(requestBody)).then(props.history.push('/login'));
     }
   };
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100vh',
-      }}
-    >
-      <form
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-        onSubmit={onSubmitHandler}
-      >
+    <div>
+      <form onSubmit={onSubmitHandler}>
         <h2>Email</h2>
         <input type="email" value={email} onChange={onEmailHandler} />
 

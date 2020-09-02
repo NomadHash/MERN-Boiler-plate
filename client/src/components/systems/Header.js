@@ -1,23 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import logoImg from '../../../public/rocket.png';
-
+import logoImg from '../../public/rocket.png';
+let conditonRegistBtn = null;
+let conditonLoginBtn = null;
 const Header = (props) => {
+  // const { isAuth, name } = props;
   const goLoginPage = () => {
     props.history.push('/login');
   };
   const goRegistPage = () => {
     props.history.push('/register');
   };
+
+  props.isAuth === true
+    ? (conditonLoginBtn = <span>안녕하세요 {props.name} 님!</span>)
+    : (conditonLoginBtn = <LoginBtn onClick={goLoginPage}>login</LoginBtn>);
+
+  props.isAuth === true
+    ? (conditonRegistBtn = '')
+    : (conditonRegistBtn = (
+        <SignUpBtn onClick={goRegistPage}>Sign up</SignUpBtn>
+      ));
+
   return (
     <HeaderDiv>
       <HeaderLeft>
         <LogoImg src={logoImg} alt="logo" />
         <HeaderTitle>M.B.P</HeaderTitle>
         <TitleBtn>
-          <LoginBtn onClick={goLoginPage}>login</LoginBtn>
-          <SignUpBtn onClick={goRegistPage}>Sign up</SignUpBtn>
+          {/* <LoginBtn onClick={goLoginPage}>login</LoginBtn> */}
+          {conditonLoginBtn}
+          {conditonRegistBtn}
+          {/* <SignUpBtn onClick={goRegistPage}>Sign up</SignUpBtn> */}
         </TitleBtn>
       </HeaderLeft>
     </HeaderDiv>
@@ -29,8 +44,7 @@ const HeaderDiv = styled.div`
   display: block;
   position: fixed;
   width: 100vw;
-  background: #ffffff;
-  box-shadow: 13px 1px 5px rgba(0, 0, 0, 0.25);
+  background: none
   height: 57px;
   z-index: 2;
 `;
@@ -58,34 +72,37 @@ const HeaderTitle = styled.h1`
   font-weight: bold;
   margin: 0;
   font-size: 26px;
-  color: #dd4d2e;
+  color: white;
 `;
 const LoginBtn = styled.button`
   border: 0;
   background: none;
   font-size: 16px;
   font-weight: 500;
-  color: #dd4d2e;
+  color: #61dafb;
   width: 56px;
   padding: 0;
   height: 54px;
   margin-right: 14px;
+  cursor: pointer;
   &:hover {
-    box-shadow: 0px 4px 0px rgb(255 110 0);
-    background: #f7f7f7;
+    box-shadow: 0px 4px 0px rgb(27 185 93);
+    outline: none;
   }
 `;
 const SignUpBtn = styled.button`
   border: 0;
+  color: white;
   background: none;
   font-size: 16px;
   font-weight: 500;
   width: 56px;
   padding: 0;
   height: 54px;
+  cursor: pointer;
   &:hover {
-    box-shadow: 0px 4px 0px rgb(255 110 0);
-    background: #f7f7f7;
+    box-shadow: 0px 4px 0px rgb(27 185 93);
+    outline: none;
   }
 `;
 
