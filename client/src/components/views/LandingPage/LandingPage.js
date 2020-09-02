@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { useDispatch } from 'react-redux';
+import { auth } from '../../../_actions/user_actions';
+
+import HeaderContainer from '../../../container/HeaderContainer';
 
 //LogoImg
 import contentImg from '../../../public/contentImg.png';
 import profileImg from '../../../public/profile.png';
 
 const LandingPage = (props) => {
-  useEffect(() => {
-    // axios.get("api/hello").then((response) => console.log(response));
-    console.log(props);
-  }, []);
+  const dispatch = useDispatch();
+  dispatch(auth()).then((response) => {
+    // console.log(response);
+  });
 
   const onClickHandler = () => {
     axios.get('/api/users/logout').then((response) => {
@@ -25,6 +30,7 @@ const LandingPage = (props) => {
   return (
     <div>
       <LandingTitle>
+        <HeaderContainer />
         <FirstTitle>Easy start with</FirstTitle>
         <SecondTitle>MERN BOILER PLATE</SecondTitle>
         <StartBtn>Start guide</StartBtn>

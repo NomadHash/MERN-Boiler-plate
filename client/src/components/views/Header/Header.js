@@ -1,29 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import logoImg from '../../../public/rocket.png';
-import { useSelector } from 'react-redux';
 
 const Header = (props) => {
-  const goRootPage = () => {
-    console.log('a');
+  const goLoginPage = () => {
     props.history.push('/login');
   };
   const goRegistPage = () => {
     props.history.push('/register');
   };
-
-  //   const { userData } = useSelector(({ user }) => {
-  //     return { isAuth: user.userData.isAuth };
-  //   });
-
   return (
     <HeaderDiv>
       <HeaderLeft>
         <LogoImg src={logoImg} alt="logo" />
         <HeaderTitle>M.B.P</HeaderTitle>
         <TitleBtn>
-          <LoginBtn onClick={goRootPage}>Login</LoginBtn>
+          <LoginBtn onClick={goLoginPage}>login</LoginBtn>
           <SignUpBtn onClick={goRegistPage}>Sign up</SignUpBtn>
         </TitleBtn>
       </HeaderLeft>

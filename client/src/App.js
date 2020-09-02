@@ -29,7 +29,7 @@ function App() {
         <Switch>
           <Route path="/register" component={Auth(RegisterPage, false, true)} />
           <Route path="/login" component={Auth(LoginPage, false)} />
-          <Route path="/" component={Auth(LandingPage, null)} />
+          <Route path="/" component={LandingPage} />
         </Switch>
       </div>
     </Router>
