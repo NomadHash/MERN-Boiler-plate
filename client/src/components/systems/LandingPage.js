@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { auth } from '../../_actions/user_actions';
@@ -18,32 +17,19 @@ const LandingPage = (props) => {
     console.log(response);
   });
 
-  // Handler Function
-  const onClickHandler = () => {
-    axios.get('/api/users/logout').then((response) => {
-      console.log(response.data);
-      if (response.data.success === true) {
-        props.history.push('/login');
-      }
-    });
-  };
-
   return (
-    <div>
-      <LandingContent>
-        <HeaderContainer />
-        <FirstTitle>쉽고 빠르게 시작하는</FirstTitle>
-        <SecondTitle>MERN 보일러 플레이트</SecondTitle>
-        <StartBtn>빠른 시작</StartBtn>
-        <img src={contentImg} alt="contentImg" />
-        <CreateByArea>
-          <ProfileImg src={profileImg} alt="profileImg" />
-          <ProfileText>CreateBy Nomad_Hash</ProfileText>
-          <ProfileText>github.com/NomadHash</ProfileText>
-        </CreateByArea>
-      </LandingContent>
-      <button onClick={onClickHandler}>로그아웃</button>
-    </div>
+    <LandingContent>
+      <HeaderContainer />
+      <FirstTitle>쉽고 빠르게 시작하는</FirstTitle>
+      <SecondTitle>MERN 보일러 플레이트</SecondTitle>
+      <StartBtn>빠른 시작</StartBtn>
+      <img src={contentImg} alt="contentImg" />
+      <CreateByArea>
+        <ProfileImg src={profileImg} alt="profileImg" />
+        <ProfileText>CreateBy Nomad_Hash</ProfileText>
+        <ProfileText>github.com/NomadHash</ProfileText>
+      </CreateByArea>
+    </LandingContent>
   );
 };
 const ProfileText = styled.h3`
@@ -74,9 +60,6 @@ const LandingContent = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  background: #141e30; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #243b55, #141e30);
-  background: linear-gradient(to right, #243b55, #141e30);
 `;
 
 const FirstTitle = styled.h2`

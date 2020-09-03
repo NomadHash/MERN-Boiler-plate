@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../_actions/user_actions';
 import { withRouter } from 'react-router-dom';
+import loginBackground from '../../public/loginBackground.jpeg';
+
+//import Container
+import HeaderContainer from '../../container/HeaderContainer';
+//Condition DOM
+let conditonErrMessage = null;
 
 const RegisterPage = (props) => {
+  // State
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -39,29 +47,122 @@ const RegisterPage = (props) => {
       dispatch(registerUser(requestBody)).then(props.history.push('/login'));
     }
   };
-
   return (
-    <div>
-      <form onSubmit={onSubmitHandler}>
-        <h2>Email</h2>
-        <input type="email" value={email} onChange={onEmailHandler} />
-
-        <h2>Name</h2>
-        <input type="text" value={name} onChange={onNameHandler} />
-
-        <h2>password</h2>
-        <input type="password" value={password} onChange={onPasswordHandler} />
-
-        <h2>Conflim password</h2>
-        <input
+    <LoginPageContent>
+      <HeaderContainer />
+      <BackgroundImg src={loginBackground} alt="logoIng" />
+      <LoginForm onSubmit={onSubmitHandler}>
+        <span>
+          <LoginText>회원가입</LoginText>
+        </span>
+        <EmailText>이름</EmailText>
+        <EmailInput type="text" value={name} onChange={onNameHandler} />
+        {conditonErrMessage}
+        <EmailText>이메일 주소</EmailText>
+        <EmailInput type="email" value={email} onChange={onEmailHandler} />
+        {conditonErrMessage}
+        <PasswordText>패스워드</PasswordText>
+        <PwdInput
+          type="password"
+          value={password}
+          onChange={onPasswordHandler}
+        />
+        <PasswordText>패스워드 확인</PasswordText>
+        <PwdInput
           type="password"
           value={confilmPassword}
           onChange={onConfilmPasswordHandler}
         />
-        <button>Login</button>
-      </form>
-    </div>
+        <LoginBtn>로그인</LoginBtn>
+      </LoginForm>
+    </LoginPageContent>
   );
 };
+
+const LoginPageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100vh;
+  padding: 10px;
+`;
+
+const BackgroundImg = styled.img`
+  position: absolute;
+  width: 64vw;
+  border-radius: 41px;
+  z-index: 1;
+`;
+
+const LoginForm = styled.form`
+  padding: 41px;
+  box-shadow: 7px 11px 5px rgba(0, 0, 0, 0.35);
+  background: white;
+  border-radius: 10px;
+  width: 23vw;
+  height: 34vw;
+  z-index: 2;
+  right: -17vw;
+  position: relative;
+`;
+
+const LoginText = styled.h1`
+  margin: 0;
+`;
+
+const EmailText = styled.h2`
+  margin: 0;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #5f5f5f;
+  font-weight: 500;
+  margin-top: 29px;
+`;
+
+const EmailInput = styled.input`
+  width: 23vw;
+  border: none;
+  border-bottom: 1px solid #cbcbcb;
+  font-size: 22px;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const PasswordText = styled.h2`
+  margin: 0;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #5f5f5f;
+  font-weight: 500;
+  margin-top: 29px;
+`;
+
+const PwdInput = styled.input`
+  width: 23vw;
+  border: none;
+  border-bottom: 1px solid #cbcbcb;
+  font-size: 22px;
+  margin-bottom: 2vw;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const LoginBtn = styled.button`
+  color: white;
+  background: #49709f;
+  border: none;
+  border-radius: 26px;
+  font-size: 21px;
+  padding: 11px;
+  font-weight: 300;
+  width: 23vw;
+  &:focus {
+    outline: none;
+  }
+`;
 
 export default withRouter(RegisterPage);

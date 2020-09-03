@@ -9,13 +9,11 @@ import RegisterPage from './components/systems/RegisterPage';
 function App() {
   return (
     <Router>
-      <div>
-        <Switch>
-          <Route path="/register" component={RegisterPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/" component={LandingPage} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route path="/register" component={RegisterPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/" component={LandingPage} />
+      </Switch>
     </Router>
   );
 }

@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../_actions/user_actions';
 import { withRouter } from 'react-router-dom';
-
 import loginBackground from '../../public/loginBackground.jpeg';
 
 //import Container
 import HeaderContainer from '../../container/HeaderContainer';
 
+//Condition DOM
+let conditonErrMessage = null;
+
+//Main Component
 const LoginPage = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,6 +26,9 @@ const LoginPage = (props) => {
   const onPasswordHandler = (event) => {
     setPassword(event.target.value);
   };
+  const onRegisterHandler = () => {
+    props.history.push('/register');
+  };
   const onSubmitHandler = (event) => {
     event.preventDefault(); // 새로고침 방지
     let requestBody = {
@@ -32,12 +38,20 @@ const LoginPage = (props) => {
     dispatch(loginUser(requestBody)).then((response) => {
       response.payload.loginSuccess === true
         ? props.history.push('/')
-        : alert('Login fail');
+        : cleanInput();
     });
   };
 
-  const onRegisterHandler = () => {
-    props.history.push('/register');
+  // Submit-Error-condition
+  const cleanInput = () => {
+    conditonErrMessage = (
+      <ErrMsg>이메일 혹은 패스워드가 잘못되었습니다.</ErrMsg>
+    );
+    setEmail('');
+    setPassword('');
+    if (email !== '') {
+      conditonErrMessage = <span></span>;
+    }
   };
 
   return (
@@ -50,10 +64,11 @@ const LoginPage = (props) => {
         </span>
         <RegisterSpan>
           <RegisterRouter>신규 사용자이신가요? </RegisterRouter>
-          {/* <RegisterBtn onClick={onRegisterHandler}>계정만들기</RegisterBtn> */}
+          <RegisterBtn onClick={onRegisterHandler}>계정만들기</RegisterBtn>
         </RegisterSpan>
         <EmailText>이메일 주소</EmailText>
         <EmailInput type="email" value={email} onChange={onEmailHandler} />
+        {conditonErrMessage}
         <PasswordText>패스워드</PasswordText>
         <PwdInput
           type="password"
@@ -72,9 +87,6 @@ const LoginPageContent = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  background: #141e30;
-  background: -webkit-linear-gradient(to right, #243b55, #141e30);
-  background: linear-gradient(to right, #243b55, #141e30);
   height: 100vh;
   padding: 10px;
 `;
@@ -143,6 +155,13 @@ const EmailInput = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+const ErrMsg = styled.h3`
+  color: firebrick;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
 `;
 
 const PasswordText = styled.h2`

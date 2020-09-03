@@ -2,39 +2,52 @@ import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import logoImg from '../../public/rocket.png';
+import axios from 'axios';
 let conditonRegistBtn = null;
 let conditonLoginBtn = null;
 const Header = (props) => {
-  // const { isAuth, name } = props;
   const goLoginPage = () => {
     props.history.push('/login');
   };
   const goRegistPage = () => {
     props.history.push('/register');
   };
+  const goRootPage = () => {
+    props.history.push('/');
+  };
+
+  // Handler Function
+  const onClickHandler = () => {
+    axios.get('/api/users/logout').then((response) => {
+      console.log(response.data);
+      if (response.data.success === true) {
+        props.history.push('/');
+      }
+    });
+  };
 
   props.isAuth === true
     ? (conditonLoginBtn = <span>안녕하세요 {props.name} 님!</span>)
-    : (conditonLoginBtn = <LoginBtn onClick={goLoginPage}>login</LoginBtn>);
+    : (conditonLoginBtn = <LoginBtn onClick={goLoginPage}>Login</LoginBtn>);
 
   props.isAuth === true
-    ? (conditonRegistBtn = '')
+    ? (conditonRegistBtn = <button onClick={onClickHandler}>로그아웃</button>)
     : (conditonRegistBtn = (
         <SignUpBtn onClick={goRegistPage}>Sign up</SignUpBtn>
       ));
 
   return (
     <HeaderDiv>
-      <HeaderLeft>
-        <LogoImg src={logoImg} alt="logo" />
-        <HeaderTitle>M.B.P</HeaderTitle>
+      <HeaderContent>
+        <HeaderLogo onClick={goRootPage}>
+          <LogoImg src={logoImg} alt="logo" />
+          <HeaderTitle>M.B.P</HeaderTitle>
+        </HeaderLogo>
         <TitleBtn>
-          {/* <LoginBtn onClick={goLoginPage}>login</LoginBtn> */}
           {conditonLoginBtn}
           {conditonRegistBtn}
-          {/* <SignUpBtn onClick={goRegistPage}>Sign up</SignUpBtn> */}
         </TitleBtn>
-      </HeaderLeft>
+      </HeaderContent>
     </HeaderDiv>
   );
 };
@@ -49,13 +62,18 @@ const HeaderDiv = styled.div`
   z-index: 2;
 `;
 
+const HeaderLogo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const LogoImg = styled.img`
   transform: rotate(45deg);
   width: 35px;
   padding-right: 4px;
 `;
 
-const HeaderLeft = styled.div`
+const HeaderContent = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
