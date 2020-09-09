@@ -7,6 +7,7 @@ import loginBackground from '../../public/loginBackground.jpeg';
 
 //import Container
 import HeaderContainer from '../../container/HeaderContainer';
+import FileUpload from '../utils/FileUpload';
 //Condition DOM
 let conditonErrMessage = null;
 
@@ -50,31 +51,35 @@ const RegisterPage = (props) => {
   return (
     <LoginPageContent>
       <HeaderContainer />
-      <BackgroundImg src={loginBackground} alt="logoIng" />
-      <LoginForm onSubmit={onSubmitHandler}>
+      {/* <img src={loginBackground} alt="logoIng" /> */}
+      <div>
         <span>
           <LoginText>회원가입</LoginText>
         </span>
-        <EmailText>이름</EmailText>
-        <EmailInput type="text" value={name} onChange={onNameHandler} />
-        {conditonErrMessage}
-        <EmailText>이메일 주소</EmailText>
-        <EmailInput type="email" value={email} onChange={onEmailHandler} />
-        {conditonErrMessage}
-        <PasswordText>패스워드</PasswordText>
-        <PwdInput
-          type="password"
-          value={password}
-          onChange={onPasswordHandler}
-        />
-        <PasswordText>패스워드 확인</PasswordText>
-        <PwdInput
-          type="password"
-          value={confilmPassword}
-          onChange={onConfilmPasswordHandler}
-        />
-        <LoginBtn>로그인</LoginBtn>
-      </LoginForm>
+        <FileUpload></FileUpload>
+        <form onSubmit={onSubmitHandler} encType="multipart/form-data">
+          <EmailText>프로필 사진</EmailText>
+          <EmailText>이름</EmailText>
+          <EmailInput type="text" value={name} onChange={onNameHandler} />
+          {conditonErrMessage}
+          <EmailText>이메일 주소</EmailText>
+          <EmailInput type="email" value={email} onChange={onEmailHandler} />
+          {conditonErrMessage}
+          <PasswordText>패스워드</PasswordText>
+          <PwdInput
+            type="password"
+            value={password}
+            onChange={onPasswordHandler}
+          />
+          <PasswordText>패스워드 확인</PasswordText>
+          <PwdInput
+            type="password"
+            value={confilmPassword}
+            onChange={onConfilmPasswordHandler}
+          />
+          <LoginBtn>로그인</LoginBtn>
+        </form>
+      </div>
     </LoginPageContent>
   );
 };

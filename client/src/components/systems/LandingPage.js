@@ -22,7 +22,6 @@ const LandingPage = (props) => {
       <HeaderContainer />
       <FirstTitle>쉽고 빠르게 시작하는</FirstTitle>
       <SecondTitle>MERN 보일러 플레이트</SecondTitle>
-      <StartBtn>빠른 시작</StartBtn>
       <img src={contentImg} alt="contentImg" />
       <CreateByArea>
         <ProfileImg src={profileImg} alt="profileImg" />
@@ -76,23 +75,6 @@ const SecondTitle = styled.h1`
   font-size: 6vw;
   margin-bottom: 40px;
   color: white;
-`;
-
-const StartBtn = styled.button`
-  background: #61dafb;
-  border: none;
-  border-radius: 7px;
-  padding: 9px 17px;
-  font-size: 21px;
-  font-weight: 600;
-  box-shadow: 0px 5px 0px rgba(0,0,0,0.7);
-  cursor: pointer;
-  &:hover {
-    outline: none;
-  }
-}
-
-
 `;
 
 export default withRouter(LandingPage);
