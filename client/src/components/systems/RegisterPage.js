@@ -52,13 +52,11 @@ const RegisterPage = (props) => {
     <LoginPageContent>
       <HeaderContainer />
       {/* <img src={loginBackground} alt="logoIng" /> */}
-      <div>
-        <span>
-          <LoginText>회원가입</LoginText>
-        </span>
+      <FormContent>
+        <LoginText>회원가입</LoginText>
+        <EmailText>프로필 사진</EmailText>
         <FileUpload></FileUpload>
         <form onSubmit={onSubmitHandler} encType="multipart/form-data">
-          <EmailText>프로필 사진</EmailText>
           <EmailText>이름</EmailText>
           <EmailInput type="text" value={name} onChange={onNameHandler} />
           {conditonErrMessage}
@@ -77,12 +75,19 @@ const RegisterPage = (props) => {
             value={confilmPassword}
             onChange={onConfilmPasswordHandler}
           />
-          <LoginBtn>로그인</LoginBtn>
+          <LoginBtn>회원가입</LoginBtn>
         </form>
-      </div>
+      </FormContent>
     </LoginPageContent>
   );
 };
+
+const FormContent = styled.div`
+  height: 60vh;
+  background: white;
+  border-radius: 30px;
+  padding: 40px;
+`;
 
 const LoginPageContent = styled.div`
   display: flex;
@@ -150,7 +155,7 @@ const PwdInput = styled.input`
   border: none;
   border-bottom: 1px solid #cbcbcb;
   font-size: 22px;
-  margin-bottom: 2vw;
+
   &:focus {
     outline: none;
   }
@@ -165,6 +170,8 @@ const LoginBtn = styled.button`
   padding: 11px;
   font-weight: 300;
   width: 23vw;
+  display: block;
+  margin-top: 2vw;
   &:focus {
     outline: none;
   }
