@@ -35,7 +35,7 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
-// user-managment-Router
+// user-managment-API-Router
 app.use("/api/users/login", userLoginRouter);
 app.use("/api/users/logout", userLogOutRouter);
 app.use("/api/users/register", userRegisterRouter);

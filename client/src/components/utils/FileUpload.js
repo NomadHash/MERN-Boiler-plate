@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-
-// CSS-library
 import styled from 'styled-components';
 
+//=================================
+//       File-Upload
+//=================================
+
 const FileUpload = (props) => {
-  //State-Hook
-  const [Images, setImages] = useState();
-  const [previewImg, setPreviewImg] = useState('');
+  //=================================
+  //     State-Hook
+  const [images, setImages] = useState();
+  const [previewImg, setPreviewImg] = useState([]);
+  //=================================
 
   const uploadHandler = (event) => {
     event.preventDefault();
@@ -35,6 +39,8 @@ const FileUpload = (props) => {
     reader.readAsDataURL(file);
   };
 
+  //=================================
+  // Conditional-Rendering-Component
   let profile_preview = null;
   if (previewImg !== '') {
     profile_preview = (
@@ -47,27 +53,32 @@ const FileUpload = (props) => {
       </div>
     );
   }
+  //=================================
 
   return (
     <>
-      <form onSubmit={uploadHandler} encType="multipart/form-data">
-        <div>
-          <FakeUploadBtn>{profile_preview}</FakeUploadBtn>
-          <UploadButton
-            type="file"
-            accept="image/jpg,impge/png,image/jpeg,image/gif"
-            name="profile_img"
-            placeholder="업로드"
-            onChange={handleFileOnChange}
-          ></UploadButton>
-        </div>
+      <form
+        onSubmit={uploadHandler}
+        encType="multipart/form-data"
+        style={{ height: '10vw', display: 'flex' }}
+      >
+        <FakeUploadBtn>{profile_preview}</FakeUploadBtn>
+        <UploadButton
+          type="file"
+          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          name="profile_img"
+          placeholder="업로드"
+          onChange={handleFileOnChange}
+        ></UploadButton>
         <button type="submit">업로드</button>
       </form>
     </>
   );
 };
 
-// Styled-Component
+//=================================
+//       Styled-Component
+//=================================
 
 const FakeUploadBtn = styled.div`
   display: flex;
@@ -79,11 +90,17 @@ const FakeUploadBtn = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  background: #49709f;
 `;
 
 const UploadButton = styled.input`
   position: relative;
   margin-right: 1px;
+
+  padding: 4vw;
+  width: 2vw;
+  right: 10vw;
+  opacity: 0;
 `;
 
 export default FileUpload;

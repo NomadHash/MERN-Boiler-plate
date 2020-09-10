@@ -5,6 +5,10 @@ import { registerUser } from '../../_actions/user_actions';
 import { withRouter } from 'react-router-dom';
 import loginBackground from '../../public/loginBackground.jpeg';
 
+//=================================
+//       Register-Page
+//=================================
+
 //import Container
 import HeaderContainer from '../../container/HeaderContainer';
 import FileUpload from '../utils/FileUpload';
@@ -17,9 +21,6 @@ const RegisterPage = (props) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confilmPassword, setConfilmPassword] = useState('');
-
-  // Redux-Dispatch
-  const dispatch = useDispatch();
 
   // Handler function
   const onEmailHandler = (event) => {
@@ -34,6 +35,10 @@ const RegisterPage = (props) => {
   const onConfilmPasswordHandler = (event) => {
     setConfilmPassword(event.target.value);
   };
+
+  //=================================
+  // Redux-Dispatch
+  const dispatch = useDispatch();
   const onSubmitHandler = (event) => {
     event.preventDefault(); // 새로고침 방지
     if (password !== confilmPassword) {
@@ -48,6 +53,8 @@ const RegisterPage = (props) => {
       dispatch(registerUser(requestBody)).then(props.history.push('/login'));
     }
   };
+  //=================================
+
   return (
     <LoginPageContent>
       <HeaderContainer />
@@ -81,6 +88,10 @@ const RegisterPage = (props) => {
     </LoginPageContent>
   );
 };
+
+//=================================
+//       Styled-Component
+//=================================
 
 const FormContent = styled.div`
   height: 60vh;
