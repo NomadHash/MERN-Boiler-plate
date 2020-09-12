@@ -9,27 +9,14 @@ import styled from 'styled-components';
 const FileUpload = (props) => {
   //=================================
   //     State-Hook
-  const [images, setImages] = useState();
   const [previewImg, setPreviewImg] = useState([]);
   //=================================
-
-  const uploadHandler = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('profile_img', event.target.profile_img.files[0]);
-    console.log(event.target.profile_img.files[0]);
-    Axios.post('/api/users/upload', formData, {
-      header: { 'content-type': 'multipart/form-data' },
-    }).then((response) => {
-      console.log(response);
-    });
-  };
 
   const handleFileOnChange = (event) => {
     event.preventDefault();
     let reader = new FileReader();
     let file = event.target.files[0];
-    console.log(file, reader);
+    // console.log(file, reader);
     reader.onloadend = () => {
       setPreviewImg({
         file: file,
@@ -37,6 +24,16 @@ const FileUpload = (props) => {
       });
     };
     reader.readAsDataURL(file);
+
+    // Post-API
+    const formData = new FormData();
+    formData.append('profile_img', event.target.files[0]);
+    Axios.post('/api/users/upload', formData, {
+      header: { 'content-type': 'multipart/form-data' },
+    }).then((response) => {
+      console.log({ response });
+      props.fileToParents(response.data.image);
+    });
   };
 
   //=================================
@@ -48,7 +45,8 @@ const FileUpload = (props) => {
         <img
           className="profile_preview"
           src={previewImg.previewURL}
-          style={{ height: '11vw' }}
+          style={{ height: '140px' }}
+          alt=""
         ></img>
       </div>
     );
@@ -57,11 +55,7 @@ const FileUpload = (props) => {
 
   return (
     <>
-      <form
-        onSubmit={uploadHandler}
-        encType="multipart/form-data"
-        style={{ height: '10vw', display: 'flex' }}
-      >
+      <form encType="multipart/form-data" style={{ display: 'flex' }}>
         <FakeUploadBtn>{profile_preview}</FakeUploadBtn>
         <UploadButton
           type="file"
@@ -70,7 +64,6 @@ const FileUpload = (props) => {
           placeholder="업로드"
           onChange={handleFileOnChange}
         ></UploadButton>
-        <button type="submit">업로드</button>
       </form>
     </>
   );
@@ -84,8 +77,8 @@ const FakeUploadBtn = styled.div`
   display: flex;
   overflow: hidden;
   position: relative;
-  width: 10vw;
-  height: 10vw;
+  width: 120px;
+  height: 120px;
   justify-content: center;
   align-items: center;
   justify-content: center;
@@ -96,10 +89,8 @@ const FakeUploadBtn = styled.div`
 const UploadButton = styled.input`
   position: relative;
   margin-right: 1px;
-
-  padding: 4vw;
-  width: 2vw;
-  right: 10vw;
+  width: 9vw;
+  right: 11vw;
   opacity: 0;
 `;
 

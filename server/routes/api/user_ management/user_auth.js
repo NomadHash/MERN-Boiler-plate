@@ -10,6 +10,7 @@ router.get("/", auth, (req, res) => {
     isAuth: true,
     email: req.user.email,
     name: req.user.name,
+    profileImage: req.user.profileImage,
   });
 });
 

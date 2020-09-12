@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../_actions/user_actions';
 import { withRouter } from 'react-router-dom';
-import loginBackground from '../../public/loginBackground.jpeg';
 
 //=================================
 //       Register-Page
@@ -17,6 +16,7 @@ let conditonErrMessage = null;
 
 const RegisterPage = (props) => {
   // State
+  const [images, setImages] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -48,27 +48,49 @@ const RegisterPage = (props) => {
         email,
         name,
         password,
+        profileImage: images,
       };
-      console.log('regist');
-      dispatch(registerUser(requestBody)).then(props.history.push('/login'));
+      console.log(requestBody);
+      dispatch(registerUser(requestBody)).then((response) => {
+        response.payload.registerSuccess === true
+          ? props.history.push('/login')
+          : cleanInput();
+      });
     }
+    const cleanInput = () => {
+      conditonErrMessage = <ErrMsg>이미 존재하는 이메일 입니다.</ErrMsg>;
+      setEmail('');
+      setPassword('');
+      setConfilmPassword('');
+      if (email !== '') {
+        conditonErrMessage = <span></span>;
+      }
+    };
   };
   //=================================
+
+  const updataImages = (newImages) => {
+    setImages(newImages);
+  };
 
   return (
     <LoginPageContent>
       <HeaderContainer />
-      {/* <img src={loginBackground} alt="logoIng" /> */}
       <FormContent>
         <LoginText>회원가입</LoginText>
-        <EmailText>프로필 사진</EmailText>
-        <FileUpload></FileUpload>
+
+        {/* ====================== */}
+        {/*       Upload            */}
+        <RegisterInputText>프로필 사진</RegisterInputText>
+        <FileUpload fileToParents={updataImages}></FileUpload>
+
+        {/* ========================= */}
+
         <form onSubmit={onSubmitHandler} encType="multipart/form-data">
-          <EmailText>이름</EmailText>
-          <EmailInput type="text" value={name} onChange={onNameHandler} />
-          {conditonErrMessage}
-          <EmailText>이메일 주소</EmailText>
-          <EmailInput type="email" value={email} onChange={onEmailHandler} />
+          <RegisterInputText>이름</RegisterInputText>
+          <RegisterInput type="text" value={name} onChange={onNameHandler} />
+          <RegisterInputText>이메일 주소</RegisterInputText>
+          <RegisterInput type="email" value={email} onChange={onEmailHandler} />
           {conditonErrMessage}
           <PasswordText>패스워드</PasswordText>
           <PwdInput
@@ -94,10 +116,11 @@ const RegisterPage = (props) => {
 //=================================
 
 const FormContent = styled.div`
-  height: 60vh;
+  height: 620px;
   background: white;
   border-radius: 30px;
   padding: 40px;
+  margin-top: 2vw;
 `;
 
 const LoginPageContent = styled.div`
@@ -110,30 +133,11 @@ const LoginPageContent = styled.div`
   padding: 10px;
 `;
 
-const BackgroundImg = styled.img`
-  position: absolute;
-  width: 64vw;
-  border-radius: 41px;
-  z-index: 1;
-`;
-
-const LoginForm = styled.form`
-  padding: 41px;
-  box-shadow: 7px 11px 5px rgba(0, 0, 0, 0.35);
-  background: white;
-  border-radius: 10px;
-  width: 23vw;
-  height: 34vw;
-  z-index: 2;
-  right: -17vw;
-  position: relative;
-`;
-
 const LoginText = styled.h1`
   margin: 0;
 `;
 
-const EmailText = styled.h2`
+const RegisterInputText = styled.h2`
   margin: 0;
   margin-bottom: 8px;
   font-size: 12px;
@@ -142,7 +146,7 @@ const EmailText = styled.h2`
   margin-top: 29px;
 `;
 
-const EmailInput = styled.input`
+const RegisterInput = styled.input`
   width: 23vw;
   border: none;
   border-bottom: 1px solid #cbcbcb;
@@ -150,6 +154,13 @@ const EmailInput = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+const ErrMsg = styled.h3`
+  color: firebrick;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
 `;
 
 const PasswordText = styled.h2`
