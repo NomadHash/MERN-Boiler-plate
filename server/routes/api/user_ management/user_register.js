@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
       user.save((err, _) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).json({
-          success: true,
+          registerSuccess: true,
         });
       });
     }

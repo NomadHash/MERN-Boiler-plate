@@ -52,6 +52,7 @@ const RegisterPage = (props) => {
       };
       console.log(requestBody);
       dispatch(registerUser(requestBody)).then((response) => {
+        console.log(response);
         response.payload.registerSuccess === true
           ? props.history.push('/login')
           : cleanInput();
